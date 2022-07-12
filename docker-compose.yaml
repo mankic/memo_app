@@ -1,0 +1,22 @@
+# 어떤 버전의 형태로 docker-compose.yaml을 쓸 것인가
+version: "3.9"
+
+# 컨테이너들을 어떻게 실행할 것인가
+services:
+  flask:            # 컨테이너 이름
+    build:          # 기존의 이미지를 사용하지 않고 실행할때마다 build 해서 사용
+      context: .    # build 되는 위치는 현재 파일 위치
+    volumes:        # bind mount
+      - ./templates:/templates
+    ports:
+      - 5000:5000
+  mongo:
+    image: mongo    # 생성되어있는 이미지  # 이미지 이름
+    volumes:        # named volume
+      - mongo:/data/db
+    ports:
+      - 24017:27017
+
+# 새로운 네임드 볼륨 mongo 로 만든다.
+volumes:
+  mongo:
